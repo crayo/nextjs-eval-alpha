@@ -1,0 +1,15 @@
+.post-list-item {
+    @apply w-full rounded-lg border-2 p-2;
+}
+.post-title {
+    @apply text-base font-bold;
+}
+.post-subtitle {
+
+}
+.post-owner {
+    @apply text-xs mr-3;
+}
+.post-date {
+    @apply text-xs;
+}
