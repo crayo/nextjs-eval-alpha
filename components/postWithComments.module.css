@@ -1,0 +1,21 @@
+.container-post {
+    @apply w-full p-2 bg-stone-300 rounded-lg;
+}
+.post-body {
+
+}
+.post-meta {
+
+}
+.post-owner {
+    @apply text-xs mr-3;
+}
+.post-date {
+    @apply text-xs;
+}
+.container-comments {
+    @apply w-full mt-5;
+}
+.comments-header {
+
+}

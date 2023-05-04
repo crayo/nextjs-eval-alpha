@@ -1,0 +1,15 @@
+.comment-list-item {
+    @apply w-full rounded-lg border-2 p-2;
+}
+.comment-body {
+    @apply text-base;
+}
+.comment-meta {
+
+}
+.comment-owner {
+    @apply text-xs mr-3;
+}
+.comment-date {
+    @apply text-xs;
+}

@@ -1,5 +1,5 @@
-import Date from "@/components/date";
 import Layout from "@/components/layout";
+import PostWithComments from "@/components/postWithComments";
 import { getDB } from "@/lib/db";
 import { getLogger } from "@/lib/logger";
 
@@ -52,16 +52,7 @@ export async function getServerSideProps(context) {
 export default function Post({ title, description, owner, timestamp, comments }) {
   return (
     <Layout pageTitle={title}>
-      <div>{description}</div>
-      <small>{owner} - <Date dateString={timestamp}/></small>
-      <ul>
-        {comments.map(({ _id, comment, owner, timestamp }) => (
-          <li key={_id}>
-            <div>{comment}</div>
-            <small>{owner} - <Date dateString={timestamp}/></small>
-          </li>
-        ))}
-      </ul>
+      <PostWithComments description={description} owner={owner} timestamp={timestamp} comments={comments} />
     </Layout>
   );
 }
