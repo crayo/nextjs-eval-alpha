@@ -5,7 +5,7 @@ export default function PostList({ posts }) {
   return (
     <ul className={styles["post-list"]}>
       {posts.map(({ _id, urlid, title, description, owner, timestamp }) => (
-        <PostListItem key={_id} id={_id} urlid={urlid} title={title} owner={owner} timestamp={timestamp} />
+        <PostListItem key={_id} urlid={urlid} title={title} owner={owner} timestamp={timestamp} />
       ))}
     </ul>
   );
