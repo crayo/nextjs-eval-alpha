@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Layout from "@/components/layout";
 import PostList from "@/components/postList";
 import { getLogger } from "@/lib/logger";
-import { getPosts } from "@/data-access/posts";
+import { getAllPosts } from "@/data-access/posts";
 import styles from "./index.module.css";
 
 export async function getServerSideProps(context) {
@@ -13,7 +13,7 @@ export async function getServerSideProps(context) {
   // set up our logger
   const logger = getLogger({ reqID, module: "Page:Home" });
   // get our posts
-  const posts = await getPosts(reqID);
+  const posts = await getAllPosts(reqID);
 
   // return our props
   return {

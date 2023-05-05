@@ -2,8 +2,8 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import Layout from "@/components/layout";
 import PostWithComments from "@/components/postWithComments";
-import { getDB } from "@/lib/db";
 import { getLogger } from "@/lib/logger";
+import { getFullPostByUrlid } from "@/data-access/posts";
 
 export async function getServerSideProps(context) {
   // check headers for a request id
@@ -13,23 +13,9 @@ export async function getServerSideProps(context) {
   const logger = getLogger({ reqID, module: "Page:Post" });
   // pull data from our context
   const { id: urlid } = context.params;
-  // get our database connection
-  logger.trace("Getting our DB connection");
-  const db = await getDB();
-  // fetch the data for our page
-  logger.trace("Fetching post and comments");
-  const postData = await db.collection("posts").aggregate([
-    { $match: { urlid } },
-    {
-      $lookup: {
-        from: "comments",
-        localField: "_id",
-        foreignField: "postId",
-        as: "comments"
-      }
-    }
-  ]).toArray();
-  logger.trace(postData, "Fetched post and comments");
+
+  // get our post data
+  const postData = await getFullPostByUrlid(urlid, reqID);
 
   // check if we got data
   if (postData.length === 0) return { notFound: true };

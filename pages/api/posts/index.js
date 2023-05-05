@@ -1,5 +1,5 @@
 import { getLogger } from "@/lib/logger";
-import { getPosts, addPost } from "@/data-access/posts";
+import { getAllPosts, addPost } from "@/data-access/posts";
 
 export default async function handler(req, res) {
   // check headers for a request id
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const { method } = req;
   if (method === "GET") {
     logger.trace(`GET request for posts`);
-    const posts = await getPosts(reqID);
+    const posts = await getAllPosts(reqID);
     logger.trace(posts, "returning posts");
     return res.status(200).json({ message: "OK", posts });
   } else if (method === "POST") {
