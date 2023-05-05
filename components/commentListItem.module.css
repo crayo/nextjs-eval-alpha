@@ -13,3 +13,16 @@
 .comment-date {
     @apply text-xs;
 }
+
+.comment-body :first-child {
+    @apply mt-0;
+}
+.comment-body > h1 {
+    @apply text-3xl my-5;
+}
+.comment-body > h2 {
+    @apply text-xl my-3;
+}
+.comment-body > ul {
+    @apply list-disc list-inside;
+}

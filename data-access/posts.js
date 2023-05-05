@@ -70,6 +70,28 @@ export const getFullPosts = async (filter={}, reqID="unknown request id") => {
         foreignField: "postId",
         as: "comments"
       }
+    },
+    {
+      $unwind: {
+        path: "$comments",
+        preserveNullAndEmptyArrays: true
+      }
+    }
+    ,{
+      $sort: {
+        "comments.timestamp": -1
+      }
+    }
+    ,{
+      $group: {
+        _id: "$_id",
+        title: { $first: "$title" },
+        owner: { $first: "$owner" },
+        urlid: { $first: "$urlid" },
+        timestamp: { $first: "$timestamp" },
+        body: { $first: "$body" },
+        comments: { $push: "$comments" }
+      }
     }
   ]).toArray();
   logger.trace(postData, "Fetched post and comments");

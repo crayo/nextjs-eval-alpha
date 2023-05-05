@@ -31,6 +31,21 @@ export async function getServerSideProps(context) {
   const contentHtml = processedContent.toString();
   logger.trace({contentHtml}, "body to HTML");
 
+  // markdown processing for comments
+  const commentsProcessed = await Promise.all(
+    comments.map(async c => {
+      logger.trace(c.comment, "processing comment for markdown");
+      const processedComment = await remark().use(html).process(c.comment);
+      logger.trace(processedComment, "processed comment");
+
+      return {
+        ...c,
+        comment: processedComment.toString(),
+        timestamp: c.timestamp.toISOString()
+      };
+    })
+  );
+
   // return our props
   return {
     props: {
@@ -38,15 +53,12 @@ export async function getServerSideProps(context) {
       body: contentHtml,
       owner,
       timestamp: timestamp.toISOString(),
-      comments: comments.map(c => ({
-        ...c,
-        timestamp: c.timestamp.toISOString()
-      }))
+      comments: commentsProcessed
     }
   };
 }
 
-export default function Post({ title, body, owner, timestamp, comments }) {
+export default function Post({ id, title, body, owner, timestamp, comments }) {
   return (
     <Layout pageTitle={title}>
       <PostWithComments body={body} owner={owner} timestamp={timestamp} comments={comments} />

@@ -31,3 +31,27 @@
 .post-body > ul {
     @apply list-disc list-inside;
 }
+.formContainer {
+    @apply rounded-lg mb-5 w-full p-2 bg-emerald-800 text-white;
+}
+.formHeading {
+    @apply font-semibold text-lg text-center;
+}
+.formOwnerContainer {
+    @apply flex flex-col items-start;
+}
+.formOwnerContainer > input {
+    @apply border-2 w-full bg-white text-black font-mono;
+}
+.formCommentContainer {
+    @apply flex flex-col items-start;
+}
+.formCommentContainer > textarea {
+    @apply border-2 w-full bg-white text-black font-mono;
+}
+.formButtonContainer {
+    @apply text-right;
+}
+.formButtonContainer > button {
+    @apply m-2 px-2 border-2 bg-slate-500;
+}
