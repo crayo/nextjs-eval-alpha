@@ -1,4 +1,5 @@
 // Home page
+import { useRouter } from 'next/router';
 import Layout from "@/components/layout";
 import PostList from "@/components/postList";
 import { getLogger } from "@/lib/logger";
@@ -23,6 +24,11 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ posts }) {
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+  }
+
   const handleSubmit = async (event) => {
     // Stop the form from submitting and refreshing the page.
     event.preventDefault();
@@ -47,7 +53,9 @@ export default function Home({ posts }) {
     );
     const result = await response.json();
     console.log(`received response`, result);
-    location.reload();
+    event.target.posttitle.value = "";
+    event.target.postbody.value = "";
+    refreshData();
   };
 
   return (
