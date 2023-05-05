@@ -1,3 +1,5 @@
+import { remark } from 'remark';
+import html from 'remark-html';
 import Layout from "@/components/layout";
 import PostWithComments from "@/components/postWithComments";
 import { getDB } from "@/lib/db";
@@ -32,13 +34,22 @@ export async function getServerSideProps(context) {
   // check if we got data
   if (postData.length === 0) return { notFound: true };
   // pull data into vars
-  const { title, description, owner, timestamp, comments } = postData[0];
+  const { title, body, owner, timestamp, comments } = postData[0];
+
+  // Use remark to convert markdown into HTML string
+  logger.trace({body}, "processing body for markdown");
+  const processedContent = await remark()
+    .use(html)
+    .process(body);
+  logger.trace(processedContent, "processed body");
+  const contentHtml = processedContent.toString();
+  logger.trace({contentHtml}, "body to HTML");
 
   // return our props
   return {
     props: {
       title,
-      description,
+      body: contentHtml,
       owner,
       timestamp: timestamp.toISOString(),
       comments: comments.map(c => ({
@@ -49,10 +60,10 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function Post({ title, description, owner, timestamp, comments }) {
+export default function Post({ title, body, owner, timestamp, comments }) {
   return (
     <Layout pageTitle={title}>
-      <PostWithComments description={description} owner={owner} timestamp={timestamp} comments={comments} />
+      <PostWithComments body={body} owner={owner} timestamp={timestamp} comments={comments} />
     </Layout>
   );
 }

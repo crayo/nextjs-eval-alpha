@@ -19,3 +19,15 @@
 .comments-header {
 
 }
+.post-body :first-child {
+    @apply mt-0;
+}
+.post-body > h1 {
+    @apply text-3xl my-5;
+}
+.post-body > h2 {
+    @apply text-xl my-3;
+}
+.post-body > ul {
+    @apply list-disc list-inside;
+}
